@@ -3,10 +3,10 @@
       <div class="container">
         <div class="content">
           <div class="library">
-            <button class="default-btn" @click="$router.push({name: 'library'})">LIBRARY</button>
+            <button class="default-btn" @click="$router.push({name: 'library'})">LIBRARY<img class="arrowIcon" src="../assets/next.png"></button>
           </div>
           <div class="titleCont">
-            <div class="display: flex; flex-direction: column;">
+            <div class="title-date">
             <p>LITTLE NIGHTMARES</p>
             <p>Initial release date: December 9, 2020</p>
             </div>
@@ -18,6 +18,7 @@
             <img class="platforms" src="../assets/nintendo-switch.png">
           </div>
         </div>
+        <div class="overlay"></div>
         <img class="banner" src="../assets/banner.png">
         <div class="gradient-bg"></div>
       </div>
@@ -68,6 +69,11 @@
   height: 200px;
 }
 
+.overlay{
+  background: red;
+
+}
+
 .container{
   position: relative;
   width: 100%;
@@ -88,6 +94,11 @@
   text-align: left;
   z-index: 1;
   width: 85%;
+}
+
+.title-date{
+  display: flex;
+  flex-direction: column;
 }
 
 .platformsCont{
@@ -117,6 +128,9 @@
 
 .default-btn{
   background: #DF3F53;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0;
   color: white;
   border-radius: 10px;
@@ -128,6 +142,10 @@
   &:hover{
     transform: scale(0.98);
   }
+}
+
+.arrowIcon{
+  width: 20px;
 }
 
 .container2{
@@ -171,6 +189,10 @@
   .titleCont{
     flex-direction: column;
     margin-bottom: 50px;
+  }
+
+  .title-date{
+    text-align:center;
   }
   
   .platformsCont{
