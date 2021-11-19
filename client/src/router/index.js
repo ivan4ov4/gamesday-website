@@ -14,7 +14,8 @@ const routes = [
   {
     path: '/:id',
     name: "game",
-    component: Game
+    component: Game,
+    meta: { transitionName: 'slide' }
   }
 ]
 

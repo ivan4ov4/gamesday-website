@@ -7,19 +7,27 @@
           </div>
           <div class="titleCont">
             <div class="title-date">
-            <p>LITTLE NIGHTMARES</p>
-            <p>Initial release date: December 9, 2020</p>
+            <p>{{ this.game[0].title }}</p>
+            <p>{{ this.game[0].releaseDate }}</p>
             </div>
           </div>
           <div class="platformsCont">
-            <img class="platforms" src="../assets/windows-logo.svg">
-            <img class="platforms" src="../assets/xbox.png">
-            <img class="platforms" src="../assets/playstation.png">
-            <img class="platforms" src="../assets/nintendo-switch.png">
+            <div v-if="this.game[0].win == 1">
+              <img class="platforms" src="../assets/windows-logo.svg">
+            </div>
+            <div v-if="this.game[0].xbox == 1">
+              <img class="platforms" src="../assets/xbox.png">
+            </div>
+            <div v-if="this.game[0].ps == 1">
+              <img class="platforms" src="../assets/playstation.png">
+            </div>
+            <div v-if="this.game[0].switch == 1">
+              <img class="platforms" src="../assets/nintendo-switch.png">
+            </div>
           </div>
         </div>
         <div class="overlay"></div>
-        <img class="banner" src="../assets/banner.png">
+        <img class="banner" :src="this.game[0].bannerImage">
         <div class="gradient-bg"></div>
       </div>
 
@@ -28,32 +36,68 @@
         <div class="leftCont">
           <div class="platformText">
             <p style="color: #DF3F53">Platforms:</p>
-            <p>PlayStation 4, Xbox One, PlayStation 5, Nintendo Switch, Xbox Series X and Series S, Microsoft Windows, Google Stadia</p>
+            <p>{{ this.game[0].platforms }}</p>
           </div>
 
           <div class="platformText">
             <p style="color: #DF3F53">Developers:</p>
-            <p>Tarsier Studios, Supermassive Games</p>
+            <p>{{ this.game[0].developers }}</p>
           </div>
 
           <div class="platformText">
             <p style="color: #DF3F53">Genres:</p>
-            <p>Puzzle Video Game, Platform game, Survival horror</p>
+            <p>{{ this.game[0].genres }}</p>
           </div>
 
 
           <div class="platformText">
             <p style="color: #DF3F53">Description:</p>
-            <p>Little Nightmares II is similar to its predecessor; it takes place in a 2.5D world. The player must explore the world, occasionally encountering platformer-like situations or being blocked by puzzles that must be solved to proceed. Unlike the first game, the player is not completely helpless; Mono has the ability to grab certain items and swing them to break objects or to fight back against smaller foes, although he, like Six, must rely on stealth and the environment to evade larger foes. The player is also given the ability to call out to Six and hold her hand to make sure they stay together and must often work together with her to solve environmental puzzles and defeat or evade enemies. The game also features collectible hats and glitching remains, the latter of which will unlock an additional scene upon collecting them all. </p>
+            <p>{{ this.game[0].description }}</p>
           </div>
         </div>
 
         <div class="rightCont">
-            <button class="default-btn" >WATCH TRAILER</button>
+            <a style="text-decoration: none;" :href="this.game[0].trailer" target="_blank"><button class="default-btn">WATCH TRAILER</button></a>
         </div>
       </div>
   </div>
 </template>
+
+<script>
+import authService from '@/services/auth-service'
+
+export default {
+  name: 'game',
+  data () {
+    return{
+      game: [
+        {
+          id: '',
+          bannerImage: '',
+          title: '...',
+          releaseDate: '...',
+          platforms: '...',
+          genres: '...',
+          developers: '...',
+          description: '...',
+          trailer: '...'
+        }
+      ]
+    }
+  },
+  methods: {
+    async fetchGame(id) {
+      const response = await authService.getGame(id)
+
+      this.game = response.data
+      console.log(this.game[0].trailer)
+    }
+  },
+  mounted() {
+    this.fetchGame(this.$route.params.id);
+  }
+}
+</script>
 
 
 <style scoped lang="scss">

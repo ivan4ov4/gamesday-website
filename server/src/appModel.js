@@ -22,7 +22,7 @@ Game.getAllGames = function (result) {
         });   
 };
 
-Blog.getGameById = function (gameId, result) {
+Game.getGameById = function (gameId, result) {
     db.query("Select * from games where title = ? ", gameId, function (err, res) {             
         if(err) {
             console.log("error: ", err);

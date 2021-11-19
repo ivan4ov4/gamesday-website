@@ -11,7 +11,7 @@ module.exports = (app) => {
         .get(appCont.list_all_games)
             
 
-    app.route('/:gameId')
+    app.route('/games/:gameId')
         .get(appCont.read_a_game)
 
 }

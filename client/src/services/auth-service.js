@@ -6,6 +6,6 @@ export default {
     },
 
     getGame(id) {
-        return api().get(`/${id}`)
+        return api().get(`/games/${id}`)
     }
 }

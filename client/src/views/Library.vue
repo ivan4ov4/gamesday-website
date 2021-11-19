@@ -3,8 +3,8 @@
     <h1 class="title">LIBRARY</h1>
 
     <div class="wrapper">
-      <div class="games" v-for="game in games" :key="game.id">
-        <img @click="$router.push({name: 'game', params: {id: game.title}})" class="thumbnail" src="../assets/thumbnail.png">
+      <div class="games"  v-for="game in games.slice().reverse()" :key="game.id">
+        <img @click="$router.push({name: 'game', params: {id: game.title}})" class="thumbnail" :src="game.thumbnailImage">
       </div>
     </div>
 
@@ -12,21 +12,35 @@
 </template>
 
 <script>
+import authService from '@/services/auth-service'
 
 export default {
   name: "Library",
   data () {
     return{
       games: [
-        { id: '0', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-        { id: '1', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-        { id: '2', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-        { id: '3', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-        { id: '4', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-        { id: '5', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-        { id: '6', image: '../assets/thumbnail.png', title: "Little Nightmares" },
-      ]
+        {
+          id: '',
+          image: '',
+          title: '...',
+          releaseDate: '...',
+          platforms: '...',
+          genres: '...',
+          developers: '...',
+          description: '...',
+        }
+      ],
     }
+  },
+  methods: {
+    async fetchGames() {
+      const response = await authService.getGames()
+
+      this.games = response.data    
+    }
+  },
+  mounted() {
+    this.fetchGames()
   }
 };
 </script>
@@ -47,6 +61,10 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px 20px;
+}
+
+.games{
+  padding: 20px;
 }
 
 
