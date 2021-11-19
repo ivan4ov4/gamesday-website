@@ -41,6 +41,14 @@ const DEFAULT_TRANSITION = 'fade';
 </script>
 
 <style lang="scss">
+:root {
+  --primary: #23adad;
+  --greyLight: #23adade1;
+  --greyLight-2: #cbe0dd;
+  --greyDark: #2d4848;
+}
+
+
 *{
   margin: 0;
   overflow-x: hidden;
