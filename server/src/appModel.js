@@ -15,11 +15,21 @@ Game.getAllGames = function (result) {
                 result(null, err);
             }
             else{
-              console.log('games : ', res);  
-
-             result(null, res);
+                console.log('games : ', res);  
+                result(null, res);
             }
         });   
+};
+
+Game.getAllPagesCount = function(result){
+    db.query("SELECT COUNT(*) AS `totalElements` FROM `gamedaydb`.`games`;", function(err,res){
+        if(err){
+            console.log("error: ", err);
+            result(err, null);
+        }else{
+            result(null,res);
+        }
+    });
 };
 
 Game.getGameById = function (gameId, result) {
@@ -34,6 +44,5 @@ Game.getGameById = function (gameId, result) {
         }
     });   
 };
-
 
 module.exports = Game;

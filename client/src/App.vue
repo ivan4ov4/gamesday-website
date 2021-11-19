@@ -3,8 +3,6 @@
     <transition
         :name="transitionName"
          mode="out-in"
-         @beforeLeave="beforeLeave"
-         @enter="enter"
          >
     <router-view />
     </transition>

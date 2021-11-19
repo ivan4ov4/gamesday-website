@@ -11,14 +11,19 @@
     <div id="app" class="container">  
       <ul class="page">
           <li class="page__btn"><span class="material-icons"><img style="transform: rotateY(-180deg);" class="arrowIcon" src="../assets/next.png"></span></li>
-          <li class="page__numbers"> 1</li>
-          <li class="page__numbers active">2</li>
+          
+          <ul  v-for="item in itemsCount" :key="item">
+            <li v-bind:id="item" class="page__numbers">{{item}}</li>
+          </ul>
+          
+          <!-- <li class="page__numbers active">1</li>
+          <li class="page__numbers">2</li>
           <li class="page__numbers">3</li>
           <li class="page__numbers">4</li>
           <li class="page__numbers">5</li>
           <li class="page__numbers">6</li>
           <li class="page__dots">...</li>
-          <li class="page__numbers"> 10</li>
+          <li class="page__numbers"> 10</li> -->
           <li class="page__btn"><span class="material-icons"><img class="arrowIcon" src="../assets/next.png"></span></li>
         </ul>
       </div>
@@ -45,17 +50,56 @@ export default {
           description: '...',
         }
       ],
+      itemsCount: 0, // DO not TOUCH !!!!!
+      nowPage: 1,
+      ElementCount: null,
+      divideNumber: 20 //this is number for divide page count elements
     }
   },
   methods: {
     async fetchGames() {
+      //this.router.push({ name: 'user', params: { userId: '123' } })
+      // /this.router.push({ path: 'register', query: { plan: 'private' } })
       const response = await authService.getGames()
+      this.games = response.data
+      
+    },
+    async getUrlPageCount(){
+        let parameters = this.$route.query
+        console.log(parameters)
+    },
 
-      this.games = response.data    
+    async pageCalculator(){
+      let parameters = this.$route.query
+      if(Object.keys(parameters).length === 0){
+        this.$router.push({path:'/', query:{Page: 1}})
+        this.nowPage = 1
+      }
+      await this.getPageElementsCount()
+    },
+    async getPageElementsCount(){ //done math for get and set pagination
+      const response = await authService.pageCount()
+      let element = response.data[0].totalElements
+      let count  = element / this.divideNumber
+      let nana = count.toString()
+      nana = nana.split('.')
+      console.log(nana)
+      console.log(nana[0])
+      console.log(nana[1])
+      let page = parseInt(nana[0])
+
+      if(nana[1] != null){
+       page =  page + 1
+      }
+      this.itemsCount = page
     }
+    
   },
   mounted() {
-    this.fetchGames()
+    //this.$router.push({path:'/', query:{Page: 1}})
+    // this.getUrlPageCount()
+    //this.fetchGames()
+    this.pageCalculator()
   }
 };
 </script>
