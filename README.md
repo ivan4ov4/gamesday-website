@@ -1,6 +1,6 @@
 # gameday-web-app
 
-![alt text](https://imgur.com/a/ApE4kKu)
+![alt text](https://i.imgur.com/1W1mVEk.jpg)
 
 
 ## Project setup inside client
