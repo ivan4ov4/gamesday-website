@@ -2,8 +2,8 @@
   <div class="about">
       <div class="container">
         <div class="content">
-          <div class="library">
-            <button class="default-btn" @click="$router.push({name: 'library'})">LIBRARY<img class="arrowIcon" src="../assets/next.png"></button>
+          <div class="library">   
+            <button class="default-btn" @click="$router.push({ name: 'library', params: { Page: lastpage} })">LIBRARY<img class="arrowIcon" src="../assets/next.png"></button>
           </div>
           <div class="titleCont">
             <div class="title-date">
@@ -80,9 +80,10 @@ export default {
           genres: '...',
           developers: '...',
           description: '...',
-          trailer: '...'
-        }
-      ]
+          trailer: '...',
+        },
+      ],
+      lastpage: 1
     }
   },
   methods: {
@@ -94,6 +95,7 @@ export default {
     }
   },
   mounted() {
+    
     this.fetchGame(this.$route.params.id);
   }
 }

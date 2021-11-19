@@ -4,7 +4,7 @@
 
     <div class="wrapper">
       <div class="games"  v-for="game in games.slice().reverse()" :key="game.id">
-        <img @click="$router.push({name: 'game', params: {id: game.title}})" class="thumbnail" :src="game.thumbnailImage">
+        <img @click="$router.push({name: 'game', params: {id: game.title, lastpage: nowPage}})" class="thumbnail" :src="game.thumbnailImage">
       </div>
     </div>
 
@@ -13,7 +13,12 @@
           <li class="page__btn"><span class="material-icons"><img style="transform: rotateY(-180deg);" class="arrowIcon" src="../assets/next.png"></span></li>
           
           <ul  v-for="item in itemsCount" :key="item">
-            <li v-bind:id="item" class="page__numbers">{{item}}</li>
+            <!-- <router-link> -->
+              <li v-bind:id="item" class="page__numbers" @click="pageClick(item)">
+                {{item}}
+              </li>
+            <!-- </router-link> -->
+            
           </ul>
           
           <!-- <li class="page__numbers active">1</li>
@@ -51,13 +56,14 @@ export default {
         }
       ],
       itemsCount: 0, // DO not TOUCH !!!!!
-      nowPage: 1,
+      nowPage: 1, // currnet page view
+      lastPageId: 1,
       ElementCount: null,
       divideNumber: 20 //this is number for divide page count elements
     }
   },
   methods: {
-    async fetchGames() {
+    async dds () {
       //this.router.push({ name: 'user', params: { userId: '123' } })
       // /this.router.push({ path: 'register', query: { plan: 'private' } })
       const response = await authService.getGames()
@@ -69,29 +75,70 @@ export default {
         console.log(parameters)
     },
 
+    async GetContenet(pageNow){
+      let Coutnt = this.divideNumber // on page view 20 
+      // let pageNow = this.nowPage // = 1 
+      let Offset  = (pageNow - 1) * Coutnt
+      let res = await authService.getGames(Coutnt,Offset)
+      this.games = res.data
+      this.lastPageId = pageNow
+      
+    },
+
     async pageCalculator(){
+      console.log("asd")
       let parameters = this.$route.query
       if(Object.keys(parameters).length === 0){
         this.$router.push({path:'/', query:{Page: 1}})
         this.nowPage = 1
       }
       await this.getPageElementsCount()
+
+      if(parameters.Page > this.itemsCount){
+        this.nowPage = 1
+        this.$router.push({path:'/', query:{Page: 1}})
+      } else {
+        this.nowPage = parameters.Page
+      }
+      if(this.nowPage == null){
+        this.nowPage = 1
+      }
+
+      console.log(this.nowPage)
+      console.log(this.lastPageId)
+      await this.changeStyle(this.nowPage, this.lastPageId)
+      await this.GetContenet(this.nowPage)      
     },
+    
+    async changeStyle(nowPage,lastPage){
+      let removeClass = document.getElementById(lastPage)
+      removeClass.classList.remove('active');
+
+      let AddClass = document.getElementById(nowPage)
+      AddClass.classList.add('active');
+    },
+
     async getPageElementsCount(){ //done math for get and set pagination
       const response = await authService.pageCount()
       let element = response.data[0].totalElements
       let count  = element / this.divideNumber
-      let nana = count.toString()
-      nana = nana.split('.')
-      console.log(nana)
-      console.log(nana[0])
-      console.log(nana[1])
-      let page = parseInt(nana[0])
+      let spliter = count.toString()
+      spliter = spliter.split('.')
+      let page = parseInt(spliter[0])
 
-      if(nana[1] != null){
+      if(spliter[1] != null){
        page =  page + 1
       }
       this.itemsCount = page
+    },
+    async pageClick(pageId){
+      if(this.nowPage != pageId){
+        this.$router.push({path:'/', query:{Page: pageId}})
+        this.lastPageId = this.nowPage
+        this.nowPage = pageId
+        await this.pageCalculator(this.nowPage)
+        // /this.router.push('/?Page='+pageId)
+      }
     }
     
   },
@@ -273,6 +320,8 @@ ul {
     }
   }
 }
-
+.router-link-exact-active {
+      color: #42b983;
+    }
 
 </style>

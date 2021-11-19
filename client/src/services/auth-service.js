@@ -5,8 +5,8 @@ export default {
         return api().get('/page')
     },
     
-    getGames() {
-        return api().get('games')
+    getGames(limit,offset) {
+        return api().get(`games/${limit}/${offset}`)
     },
 
     getGame(id) {

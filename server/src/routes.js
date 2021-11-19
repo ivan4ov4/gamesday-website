@@ -7,7 +7,7 @@ module.exports = (app) => {
         })
     }),
 
-    app.route('/games')
+    app.route('/games/:limit/:offset')
         .get(appCont.list_all_games)
             
 
