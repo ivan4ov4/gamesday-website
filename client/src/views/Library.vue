@@ -59,7 +59,7 @@ export default {
       nowPage: 1, // currnet page view
       lastPageId: 1,
       ElementCount: null,
-      divideNumber: 20 //this is number for divide page count elements
+      divideNumber: 5 //this is number for divide page count elements
     }
   },
   methods: {
