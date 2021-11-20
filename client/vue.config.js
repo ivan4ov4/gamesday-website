@@ -7,5 +7,6 @@ module.exports = {
                 args[0].title = "My Vue App";
                 return args;
             })
-    }
+    },
+    lintOnSave: false
 }

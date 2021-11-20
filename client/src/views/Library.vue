@@ -3,33 +3,22 @@
     <h1 class="title">LIBRARY</h1>
 
     <div class="wrapper">
-      <div class="games"  v-for="game in games.slice().reverse()" :key="game.id">
+      <div class="games"  v-for="game in games" :key="game.id">
         <img @click="$router.push({name: 'game', params: {id: game.title, lastpage: nowPage}})" class="thumbnail" :src="game.thumbnailImage">
       </div>
     </div>
 
     <div id="app" class="container">  
       <ul class="page">
-          <li class="page__btn"><span class="material-icons"><img style="transform: rotateY(-180deg);" class="arrowIcon" src="../assets/next.png"></span></li>
+          <!-- <li class="page__btn"><span class="material-icons"><img style="transform: rotateY(-180deg);" class="arrowIcon" src="../assets/next.png"></span></li> -->
           
-          <ul  v-for="item in itemsCount" :key="item">
-            <!-- <router-link> -->
+          <div v-for="item in itemsCount" :key="item">
               <li v-bind:id="item" class="page__numbers" @click="pageClick(item)">
                 {{item}}
-              </li>
-            <!-- </router-link> -->
-            
-          </ul>
+              </li>  
+          </div>
           
-          <!-- <li class="page__numbers active">1</li>
-          <li class="page__numbers">2</li>
-          <li class="page__numbers">3</li>
-          <li class="page__numbers">4</li>
-          <li class="page__numbers">5</li>
-          <li class="page__numbers">6</li>
-          <li class="page__dots">...</li>
-          <li class="page__numbers"> 10</li> -->
-          <li class="page__btn"><span class="material-icons"><img class="arrowIcon" src="../assets/next.png"></span></li>
+          <!-- <li class="page__btn"><span class="material-icons"><img class="arrowIcon" src="../assets/next.png"></span></li> -->
         </ul>
       </div>
 
@@ -59,7 +48,7 @@ export default {
       nowPage: 1, // currnet page view
       lastPageId: 1,
       ElementCount: null,
-      divideNumber: 5 //this is number for divide page count elements
+      divideNumber: 20 //this is number for divide page count elements
     }
   },
   methods: {
@@ -192,16 +181,36 @@ export default {
   }
 }
 
+@media only screen and (max-width: 700px) {
+  .title{
+    font-size: 1.6rem;
+  }
+
+  .wrapper{
+    width: 100%;
+  }
+
+  .games{
+    flex-basis: 25%;
+
+    img{
+      width: 150px;
+    }
+  }
+}
+
 @media only screen and (max-width: 600px) {
-  .wrapper {
-    flex-direction: column;
+  .games{
+    flex-basis: 35%;
+
+    img{
+      width: 120px;
+    }
   }
 }
 
 
-
-
-
+// PAGINATION
 .container {
   display: flex;
   flex-direction: column;
@@ -267,6 +276,7 @@ ul {
   align-items: center;
   height: 5rem;
   margin: 3rem;
+  padding: 0;
   border-radius: 0.6rem;
   background: #0d1216;
   box-shadow: 0 0.8rem 2rem rgba(#5a6181, 0.05);
@@ -290,8 +300,8 @@ ul {
   }
 
   &__numbers {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 0.4rem;
 
     &:hover {
@@ -301,7 +311,6 @@ ul {
     &.active {
       color: #ffffff;
       background: var(--primary);
-      font-weight: 600;
       border: 1px solid var(--primary);
     }
   }
@@ -320,8 +329,5 @@ ul {
     }
   }
 }
-.router-link-exact-active {
-      color: #42b983;
-    }
 
 </style>

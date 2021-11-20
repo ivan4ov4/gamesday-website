@@ -8,7 +8,7 @@ var Game = function(game){
 
 
 Game.getAllGames = function (limit, offset, result) {
-    let makingSQLQuery = "SELECT * FROM	games LIMIT "+limit+" OFFSET "+offset+";";
+    let makingSQLQuery = "SELECT * FROM	games ORDER BY `id` DESC LIMIT "+limit+" OFFSET "+offset+";";
     console.log(makingSQLQuery);
     //db.query("Select * from games", function (err, res) {
     db.query(makingSQLQuery, function (err, res) {

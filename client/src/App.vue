@@ -39,13 +39,11 @@ const DEFAULT_TRANSITION = 'fade';
 </script>
 
 <style lang="scss">
-:root {
-  --primary: #23adad;
-  --greyLight: #23adade1;
-  --greyLight-2: #cbe0dd;
-  --greyDark: #2d4848;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
+:root {
+  --primary: #DF3F53;
+}
 
 *{
   margin: 0;
@@ -57,7 +55,7 @@ html, body{
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
