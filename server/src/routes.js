@@ -7,11 +7,14 @@ module.exports = (app) => {
         })
     }),
 
-    app.route('/games')
+    app.route('/games/:limit/:offset')
         .get(appCont.list_all_games)
             
 
     app.route('/games/:gameId')
         .get(appCont.read_a_game)
+
+    app.route('/page')
+        .get(appCont.read_a_page_count)
 
 }

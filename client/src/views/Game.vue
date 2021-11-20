@@ -2,8 +2,8 @@
   <div class="about">
       <div class="container">
         <div class="content">
-          <div class="library">
-            <button class="default-btn" @click="$router.push({name: 'library'})">LIBRARY<img class="arrowIcon" src="../assets/next.png"></button>
+          <div class="library">   
+            <button class="default-btn" @click="libaryClick(lastpage)">LIBRARY<img class="arrowIcon" src="../assets/next.png"></button>
           </div>
           <div class="titleCont">
             <div class="title-date">
@@ -80,20 +80,30 @@ export default {
           genres: '...',
           developers: '...',
           description: '...',
-          trailer: '...'
-        }
-      ]
+          trailer: '...',
+        },
+      ],
+      lastpage: 1
     }
   },
   methods: {
+    libaryClick:function(PageToRedirect){
+      let makingPath = '/?Page='+PageToRedirect;
+      this.$router.push({ path: makingPath });
+    },
     async fetchGame(id) {
       const response = await authService.getGame(id)
-
       this.game = response.data
-      console.log(this.game[0].trailer)
+      // console.log(this.game[0].trailer)
+    },
+    async tryGetLastPage(PageId){
+      if(PageId != null){
+        this.lastpage = PageId
+      }
     }
   },
   mounted() {
+    this.tryGetLastPage(this.$route.params.lastpage);
     this.fetchGame(this.$route.params.id);
   }
 }
