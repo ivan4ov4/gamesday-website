@@ -160,7 +160,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px 20px;
-  width: 80%;
+  width: 85%;
   margin: auto;
 }
 
