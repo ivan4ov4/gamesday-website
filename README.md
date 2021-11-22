@@ -1,22 +1,25 @@
-# gameday-web-app
+# Gamesday-web-app
 
 ![alt text](https://i.imgur.com/1W1mVEk.jpg)
 
 
 ## Project setup inside client
 ```
-npm install
-npm run serve
+Create .env file and setup the VUE_APP_BASE_URL (API URL)
+
+Run 'npm install' to get the required packages
+
+Run 'npm run serve' for development 
+
+To compile and minify for production run 'npm run build'
 ```
 
 
 ## Project setup inside server
 ```
-npm install
-/server/db.js is the database configuration file where you should enter your credentials! In my case I used .env file
-```
+Create .env file and setup the DB (DB_HOST, DB_USER, DB_PASS, DB_NAME) , server port (PORT) and site url (ORIGIN)
 
-### Compiles and minifies for production
-```
-npm run build
+Run 'npm install' to get the required packages
+
+Run 'npm start' to run the server
 ```

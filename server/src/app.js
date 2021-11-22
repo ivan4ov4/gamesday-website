@@ -4,7 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 
 var corsOptions = {
-    origin: "http://localhost:8080"
+    origin: process.env.ORIGIN
 };
 
 const app = express()
