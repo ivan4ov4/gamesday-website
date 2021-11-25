@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <div v-if="this.game[0] !== undefined">
       <div class="container">
         <div class="content">
           <div class="library">   
@@ -60,6 +61,14 @@
             <a style="text-decoration: none;" :href="this.game[0].trailer" target="_blank"><button class="default-btn">WATCH TRAILER</button></a>
         </div>
       </div>
+    </div>
+
+    <div v-else>
+      <div class="noGamePanel">
+        <h1>No such game!</h1>
+        <button class="default-btn" @click="libaryClick(lastpage)">LIBRARY<img class="arrowIcon" src="../assets/next.png"></button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -94,7 +103,9 @@ export default {
     async fetchGame(id) {
       const response = await authService.getGame(id)
       this.game = response.data
-      // console.log(this.game[0].trailer)
+
+      if(typeof this.game[0].title !== "undefiend")
+        console.log(this.game[0].title)
     },
     async tryGetLastPage(PageId){
       if(PageId != null){
@@ -226,6 +237,15 @@ export default {
   display: flex;
   justify-content: flex-end;
   width: 85%;
+}
+
+.noGamePanel{  
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 1000px) {

@@ -1,6 +1,10 @@
 <template>
   <div class="library">
-    <h1 class="title">LIBRARY</h1>
+
+    <form class="searchPanel" @submit.prevent="searchGame">
+      <input class="searchInput" v-model="gameTitle" placeholder="Type Game Title">
+      <img class="searchIcon" src="../assets/icons8-search.svg" @click="searchGame()">
+    </form>
 
     <div class="wrapper">
       <div class="games"  v-for="game in games" :key="game.id">
@@ -32,6 +36,7 @@ export default {
   name: "Library",
   data () {
     return{
+      gameTitle: '',
       games: [
         {
           id: '',
@@ -128,6 +133,11 @@ export default {
         await this.pageCalculator(this.nowPage)
         // /this.router.push('/?Page='+pageId)
       }
+    },
+    searchGame(){
+      if(this.gameTitle != ''){
+        this.$router.push(this.gameTitle)
+      }
     }
     
   },
@@ -142,13 +152,39 @@ export default {
 
 <style scoped lang="scss">
 
+.searchPanel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 10px 0;
+}
+
+.searchInput{
+  background: #0d1216;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  border: 0;
+
+  &:focus{
+    outline: var(--primary) 1.5px solid;
+  }
+}
+
+.searchIcon{
+  margin-left: 10px;
+  width: 20px;
+  cursor: pointer;
+
+  &:active{
+    transform: scale(0.96);
+  }
+}
+
 .arrowIcon{
   width: 20px;
 }
 
-.library{
-  margin: 50px 10px 0 10px;
-}
 
 .title{
   margin-bottom: 30px;
